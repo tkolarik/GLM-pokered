@@ -127,7 +127,7 @@ MainMenu:
 InitOptions:
 	ld a, TEXT_DELAY_FAST
 	ld [wLetterPrintingDelayFlags], a
-	ld a, TEXT_DELAY_MEDIUM
+	ld a, DEFAULT_OPTIONS
 	ld [wOptions], a
 	ret
 
@@ -184,13 +184,13 @@ LinkMenu:
 	ld b, a
 	and $f0
 	cp $d0
-	jr z, .checkEnemyMenuSelection
+	jr z, .asm_5c7d
 	ld a, [wLinkMenuSelectionReceiveBuffer + 1]
 	ld b, a
 	and $f0
 	cp $d0
 	jr nz, .exchangeMenuSelectionLoop
-.checkEnemyMenuSelection
+.asm_5c7d
 	ld a, b
 	and $c ; did the enemy press A or B?
 	jr nz, .enemyPressedAOrB
@@ -284,11 +284,9 @@ LinkMenu:
 .choseCancel
 	xor a
 	ld [wMenuJoypadPollCount], a
-	vc_hook Wireless_net_stop
 	call Delay3
 	call CloseLinkConnection
 	ld hl, LinkCanceledText
-	vc_hook Wireless_net_end
 	call PrintText
 	ld hl, wd72e
 	res 6, [hl]

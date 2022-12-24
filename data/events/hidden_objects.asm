@@ -174,14 +174,14 @@ HiddenObjectPointers:
 	dw CeruleanCityHiddenObjects
 	dw Route4HiddenObjects
 
-MACRO hidden_object
+hidden_object: MACRO
 	db \2 ; y coord
 	db \1 ; x coord
 	db \3 ; item id
 	dba \4 ; object routine
 ENDM
 
-MACRO hidden_text_predef
+hidden_text_predef: MACRO
 	db \2 ; y coord
 	db \1 ; x coord
 	db_tx_pre \3 ; text id
@@ -191,7 +191,7 @@ ENDM
 ; Some hidden objects use SPRITE_FACING_* values,
 ; but these do not actually prevent the player
 ; from interacting with them in any direction.
-DEF ANY_FACING EQU $d0
+ANY_FACING EQU $d0
 
 TradeCenterHiddenObjects:
 	hidden_object  5,  4, ANY_FACING, CableClubRightGameboy
@@ -390,7 +390,7 @@ CinnabarGymHiddenObjects:
 	hidden_object  9,  7, (TRUE  << 4) | 3, PrintCinnabarQuiz
 	hidden_object  9, 13, (TRUE  << 4) | 4, PrintCinnabarQuiz
 	hidden_object  1, 13, (FALSE << 4) | 5, PrintCinnabarQuiz
-	hidden_object  1,  7, (TRUE  << 4) | 6, PrintCinnabarQuiz
+	hidden_object  1,  7, (FALSE << 4) | 6, PrintCinnabarQuiz ;TombStoner
 	db -1 ; end
 
 CinnabarPokecenterHiddenObjects:
